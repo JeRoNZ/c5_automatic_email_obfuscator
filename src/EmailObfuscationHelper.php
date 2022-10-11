@@ -1,9 +1,11 @@
-<?php
+<?php 
 namespace Concrete\Package\AutomaticEmailObfuscator\Src;
+
+defined('C5_EXECUTE') or die(_('Access Denied.'));
 
 use Core;
 use Concrete\Core\Page\Page;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Component\EventDispatcher\GenericEvent;
 
 class EmailObfuscationHelper
 {
@@ -17,10 +19,10 @@ class EmailObfuscationHelper
      * Handles the event's content
      * obfuscates emails if current page is not admin area
      *
-     * @param Event $event
-     * @return Event
+     * @param GenericEvent $event
+     * @return GenericEvent
      */
-    public function handle(Event $event)
+    public function handle(GenericEvent $event)
     {
         $viewText = $event->getArgument('contents');
         $p = Page::getCurrentPage();
@@ -63,18 +65,18 @@ class EmailObfuscationHelper
         $text = $parts[2] . $parts[3];
         $obfuscated = $obfuscator->obfuscateMailtoLinkHref($text);
         if ($text != $obfuscated) {
-            $linkCls = "obfuscated-link";
+            $linkCls = 'obfuscated-link';
             $hasClass = false;
-            if (strpos($parts[0], "class=\"") !== false) {
-                $parts[0] = str_replace("class=\"", "class=\"" . $linkCls . " ", $parts[0]);
+            if (strpos($parts[0], 'class="') !== false) {
+                $parts[0] = str_replace('class="', 'class="' . $linkCls . ' ', $parts[0]);
                 $hasClass = true;
             }
-            if (strpos($parts[4], "class=\"") !== false) {
-                $parts[4] = str_replace("class=\"", "class=\"" . $linkCls . " ", $parts[4]);
+            if (strpos($parts[4], 'class="') !== false) {
+                $parts[4] = str_replace('class="', 'class="' . $linkCls . ' ', $parts[4]);
                 $hasClass = true;
             }
             if (!$hasClass) {
-                $parts[0] = $parts[0] . 'class="' . $linkCls . '" ';
+                $parts[0] .= 'class="' . $linkCls . '" ';
             }
             return $parts[0] . $parts[1] . $obfuscated . $parts[4];
         }

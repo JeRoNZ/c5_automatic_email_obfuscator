@@ -1,7 +1,7 @@
-<?php
+<?php 
 namespace Concrete\Package\AutomaticEmailObfuscator;
 
-defined('C5_EXECUTE') or die(_("Access Denied."));
+defined('C5_EXECUTE') or die(_('Access Denied.'));
 
 use Core;
 use Concrete\Core\Package\Package;
@@ -11,22 +11,22 @@ class Controller extends Package
 {
 
     protected $pkgHandle = 'automatic_email_obfuscator';
-    protected $appVersionRequired = '5.7.3.1';
-    protected $pkgVersion = '2.0.1';
+    protected $appVersionRequired = '9.1.2';
+    protected $pkgVersion = '3.0.0';
+
+	protected $pkgAutoloaderRegistries = [
+		'src' => 'Concrete\Package\AutomaticEmailObfuscator\Src',
+	];
+
 
     public function getPackageName()
     {
-        return t("Automatic Email Obfuscator");
+        return t('Automatic Email Obfuscator');
     }
 
     public function getPackageDescription()
     {
-        return t("Automatically obfuscates all the e-mail addresses on your site to a form that most spambots cannot read.");
-    }
-
-    public function install()
-    {
-        parent::install();
+        return t('Automatically obfuscates all the e-mail addresses on your site to a form that most spambots cannot read.');
     }
 
     public function on_start()

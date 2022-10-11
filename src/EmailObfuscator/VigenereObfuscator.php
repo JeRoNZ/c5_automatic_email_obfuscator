@@ -1,5 +1,7 @@
-<?php
+<?php 
 namespace Concrete\Package\AutomaticEmailObfuscator\Src\EmailObfuscator;
+
+defined('C5_EXECUTE') or die(_('Access Denied.'));
 
 use Core;
 use Concrete\Core\Asset\AssetList;
@@ -51,14 +53,15 @@ class VigenereObfuscator extends AbstractObfuscator
             $alphabet_matrix[$i] = substr($alphabet, $i) . substr($alphabet, 0, $i);
         }
         $j = -1;
+		$ciphered_email='';
         for ($i = 0; $i < $email_len; $i++) {
             $j++;
-            if (strpos($alphabet, $email{$i}) === false) {
+            if (strpos($alphabet, $email[$i]) === false) {
                 $j--;
-                $ciphered_email .= $email{$i};
+                $ciphered_email .= $email[$i];
             } else {
-                $pos_in_alpha = strpos($alphabet, $key{$j});
-                $ciphered_email .= strtr($email{$i}, $alphabet, $alphabet_matrix[$pos_in_alpha]);
+                $pos_in_alpha = strpos($alphabet, $key[$j]);
+                $ciphered_email .= strtr($email[$i], $alphabet, $alphabet_matrix[$pos_in_alpha]);
             }
             if ($j === $key_len - 1) {
                 $j = -1;
