@@ -1,7 +1,7 @@
 <?php 
 namespace Concrete\Package\EmailObfuscator\Src;
 
-defined('C5_EXECUTE') or die(_('Access Denied.'));
+defined('C5_EXECUTE') or die('Access Denied');
 
 use Core;
 use Config;
@@ -17,7 +17,7 @@ class PackageServiceProvider extends Provider
         if (!$this->app->bound('email_obfuscator/obfuscator')) {
             $this->app->singleton('email_obfuscator/obfuscator', function () {
                 $method = Config::get('app.obfuscator.method', 'html');
-                $name = Core::make('helper/text')->camelcase($method);
+                $name = $this->app->make('helper/text')->camelcase($method);
                 $obfuscatorClass = '\Concrete\Package\EmailObfuscator\Src\EmailObfuscator\\' . $name . 'Obfuscator';
                 if (!class_exists($obfuscatorClass)) {
                     throw new \Exception(t("Invalid email obfuscation method defined: %s", $method));
@@ -38,7 +38,7 @@ class PackageServiceProvider extends Provider
             if ($event->hasArgument('view')) {
                 $view = $event->getArgument('view');
                 if ($view instanceof PageView) {
-                    Core::make('email_obfuscator/obfuscator')->registerViewAssets();
+                    $this->app->make('email_obfuscator/obfuscator')->registerViewAssets();
                 }
             }
         });

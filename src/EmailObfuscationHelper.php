@@ -1,9 +1,9 @@
 <?php 
 namespace Concrete\Package\EmailObfuscator\Src;
 
-defined('C5_EXECUTE') or die(_('Access Denied.'));
+defined('C5_EXECUTE') or die('Access Denied');
 
-use Core;
+use Concrete\Core\Support\Facade\Application;
 use Concrete\Core\Page\Page;
 use Symfony\Component\EventDispatcher\GenericEvent;
 
@@ -12,7 +12,7 @@ class EmailObfuscationHelper
 
     public function registerViewAssets()
     {
-        Core::make('email_obfuscator/obfuscator')->registerViewAssets();
+        $this->app->make('email_obfuscator/obfuscator')->registerViewAssets();
     }
 
     /**
@@ -60,7 +60,8 @@ class EmailObfuscationHelper
     public function obfuscateMailto($matches)
     {
         $parts = array($matches[1], $matches[2], $matches[3], $matches[4], $matches[5]);
-        $obfuscator = Core::make('email_obfuscator/obfuscator');
+		$app = Application::getFacadeApplication();
+        $obfuscator = $app->make('email_obfuscator/obfuscator');
         
         $text = $parts[2] . $parts[3];
         $obfuscated = $obfuscator->obfuscateMailtoLinkHref($text);
@@ -85,7 +86,8 @@ class EmailObfuscationHelper
 
     public function obfuscateMail($matches)
     {
-        $obfuscator = Core::make('email_obfuscator/obfuscator');
+		$app = Application::getFacadeApplication();
+		$obfuscator = $app->make('email_obfuscator/obfuscator');
 
         $text = $matches[0];
         $obfuscated = $obfuscator->obfuscateMail($text);

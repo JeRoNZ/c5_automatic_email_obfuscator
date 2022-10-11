@@ -1,9 +1,9 @@
 <?php 
 namespace Concrete\Package\EmailObfuscator;
 
-defined('C5_EXECUTE') or die(_('Access Denied.'));
+defined('C5_EXECUTE') or die('Access Denied');
 
-use Core;
+use Concrete\Core\Support\Facade\Application;
 use Concrete\Core\Package\Package;
 use Concrete\Package\EmailObfuscator\Src\PackageServiceProvider;
 
@@ -31,7 +31,7 @@ class Controller extends Package
 
     public function on_start()
     {
-        $app = Core::getFacadeApplication();
+        $app = Application::getFacadeApplication();
         $sp = new PackageServiceProvider($app);
         $sp->register();
         $sp->registerEvents();
