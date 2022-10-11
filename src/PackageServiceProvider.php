@@ -1,5 +1,5 @@
 <?php 
-namespace Concrete\Package\AutomaticEmailObfuscator\Src;
+namespace Concrete\Package\EmailObfuscator\Src;
 
 defined('C5_EXECUTE') or die(_('Access Denied.'));
 
@@ -14,11 +14,11 @@ class PackageServiceProvider extends Provider
 
     public function register()
     {
-        if (!$this->app->bound('automatic_email_obfuscator/obfuscator')) {
-            $this->app->singleton('automatic_email_obfuscator/obfuscator', function () {
+        if (!$this->app->bound('email_obfuscator/obfuscator')) {
+            $this->app->singleton('email_obfuscator/obfuscator', function () {
                 $method = Config::get('app.obfuscator.method', 'html');
                 $name = Core::make('helper/text')->camelcase($method);
-                $obfuscatorClass = '\Concrete\Package\AutomaticEmailObfuscator\Src\EmailObfuscator\\' . $name . 'Obfuscator';
+                $obfuscatorClass = '\Concrete\Package\EmailObfuscator\Src\EmailObfuscator\\' . $name . 'Obfuscator';
                 if (!class_exists($obfuscatorClass)) {
                     throw new \Exception(t("Invalid email obfuscation method defined: %s", $method));
                 }
@@ -38,7 +38,7 @@ class PackageServiceProvider extends Provider
             if ($event->hasArgument('view')) {
                 $view = $event->getArgument('view');
                 if ($view instanceof PageView) {
-                    Core::make('automatic_email_obfuscator/obfuscator')->registerViewAssets();
+                    Core::make('email_obfuscator/obfuscator')->registerViewAssets();
                 }
             }
         });

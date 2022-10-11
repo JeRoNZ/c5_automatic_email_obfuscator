@@ -1,5 +1,5 @@
 <?php 
-namespace Concrete\Package\AutomaticEmailObfuscator\Src\EmailObfuscator;
+namespace Concrete\Package\EmailObfuscator\Src\EmailObfuscator;
 
 defined('C5_EXECUTE') or die(_('Access Denied.'));
 

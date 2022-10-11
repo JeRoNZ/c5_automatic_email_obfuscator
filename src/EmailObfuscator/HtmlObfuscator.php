@@ -1,5 +1,5 @@
 <?php 
-namespace Concrete\Package\AutomaticEmailObfuscator\Src\EmailObfuscator;
+namespace Concrete\Package\EmailObfuscator\Src\EmailObfuscator;
 defined('C5_EXECUTE') or die(_('Access Denied.'));
 
 use Concrete\Core\Asset\AssetList;
@@ -12,12 +12,12 @@ class HtmlObfuscator extends AbstractObfuscator
     {
         $al = AssetList::getInstance();
         $al->register(
-            'javascript', 'automatic_email_obfuscator/html', 'js/email_deobfuscator_html.js', array(),
-            'automatic_email_obfuscator'
+            'javascript', 'email_obfuscator/html', 'js/email_deobfuscator_html.js', array(),
+            'email_obfuscator'
         );
 
         $r = ResponseAssetGroup::get();
-        $r->requireAsset('javascript', 'automatic_email_obfuscator/html');
+        $r->requireAsset('javascript', 'email_obfuscator/html');
     }
 
     public function obfuscateMail($email)

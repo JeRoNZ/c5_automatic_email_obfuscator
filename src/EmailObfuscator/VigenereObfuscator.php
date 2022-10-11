@@ -1,5 +1,5 @@
 <?php 
-namespace Concrete\Package\AutomaticEmailObfuscator\Src\EmailObfuscator;
+namespace Concrete\Package\EmailObfuscator\Src\EmailObfuscator;
 
 defined('C5_EXECUTE') or die(_('Access Denied.'));
 
@@ -25,12 +25,12 @@ class VigenereObfuscator extends AbstractObfuscator
     {
         $al = AssetList::getInstance();
         $al->register(
-            'javascript', 'automatic_email_obfuscator/vigenere', 'js/email_deobfuscator_vgnr.js', array(),
-            'automatic_email_obfuscator'
+            'javascript', 'email_obfuscator/vigenere', 'js/email_deobfuscator_vgnr.js', array(),
+            'email_obfuscator'
         );
 
         $r = ResponseAssetGroup::get();
-        $r->requireAsset('javascript', 'automatic_email_obfuscator/vigenere');
+        $r->requireAsset('javascript', 'email_obfuscator/vigenere');
     }
 
     public function obfuscateMail($email)
